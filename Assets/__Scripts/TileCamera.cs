@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Globalization;
 
 public class TileCamera : MonoBehaviour {
     // static variables
@@ -31,24 +32,26 @@ public class TileCamera : MonoBehaviour {
         string[] lines = mapData.text.Split('\n');
         H = lines.Length;
         string[] tileNums = lines[0].Split(' ');
+
+
         W = tileNums.Length;
 
-        System.Globalization.NumberStyles hexNum;
-        hexNum = System.Globalization.NumberStyles.HexNumber;
+        NumberStyles hexNum;
+        hexNum = NumberStyles.HexNumber;
 
         MAP = new int[W, H];
         for (int j = 0; j < H; j++)
         {
             tileNums = lines[j].Split(' ');
-            for (int i = 0; i < W; i++)
+            for (int i = 0; i < W-1; i++)
             {
                 if (tileNums[i] == "..")
                 {
                     MAP[i, j] = 0;
                 }
-                else
+                if(tileNums[i] != "..")
                 {
-                    MAP[i, j] = int.Parse(tileNums[i], hexNum);
+                        MAP[i, j] = int.Parse(tileNums[i], hexNum);
                 }
             }//end of row for loop
         } //end of column for loop
